@@ -1,0 +1,21 @@
+<div class="home-container">
+  <h1>Vídeos Populares</h1>
+
+  <!-- Barra de Pesquisa -->
+  <div class="search-bar">
+    <input type="text" placeholder="Pesquisar vídeos..." [(ngModel)]="searchTerm" (input)="filtrarVideos()">
+    <select [(ngModel)]="categoriaSelecionada" (change)="filtrarVideos()">
+      <option value="">Todas as Categorias</option>
+      <option *ngFor="let categoria of categorias" [value]="categoria">{{ categoria }}</option>
+    </select>
+  </div>
+
+  <!-- Lista de Vídeos -->
+  <div class="video-card" *ngFor="let video of videosFiltrados">
+    <a [routerLink]="['/video', video.id]">
+      <img [src]="video.thumbnail" alt="Miniatura do vídeo">
+      <h3>{{ video.title }}</h3>
+      <p>{{ video.description }}</p>
+    </a>
+  </div>
+</div>
