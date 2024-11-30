@@ -1,9 +1,6 @@
-<div class="video-container">
+<div *ngIf="video" class="video-container">
   <!-- Vídeo em destaque -->
-  <video controls class="video-player">
-    <source [src]="video.url" type="video/mp4">
-    Seu navegador não suporta o elemento de vídeo.
-  </video>
+  <iframe class="video-player" [src]="getSafeUrl(video.url)" frameborder="0" allowfullscreen></iframe>
 
   <!-- Informações detalhadas -->
   <div class="video-info">
