@@ -1,0 +1,17 @@
+<div class="video-container">
+  <!-- Vídeo em destaque -->
+  <video controls class="video-player">
+    <source [src]="video.url" type="video/mp4">
+    Seu navegador não suporta o elemento de vídeo.
+  </video>
+
+  <!-- Informações detalhadas -->
+  <div class="video-info">
+    <h2>{{ video.title }}</h2>
+    <p class="description">{{ video.description }}</p>
+    <p class="details">
+      <span>{{ video.uploadDate }}</span> • 
+      <span>{{ video.views }} visualizações</span>
+    </p>
+  </div>
+</div>
