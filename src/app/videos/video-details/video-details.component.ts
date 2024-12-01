@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { VideoService } from '../../video.service';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-video-details',
@@ -13,30 +14,36 @@ import { VideoService } from '../../video.service';
 })
 export class VideoDetailsComponent implements OnInit {
   video: any;
-
+  userId: string | undefined;
+  
   constructor(
     private route: ActivatedRoute,
     private videoService: VideoService,
-    private sanitizer: DomSanitizer
-  ) {}
+    private sanitizer: DomSanitizer,
+    public auth: AuthService
+  ) { }
 
   ngOnInit(): void {
     const videoId = this.route.snapshot.paramMap.get('id');
     if (videoId) {
       this.videoService.getVideo(Number(videoId)).subscribe(video => {
         this.video = video;
+        this.incrementViews(videoId);
       });
     }
+
+    this.auth.user$.subscribe(user => {
+      this.userId = user?.sub;
+    });
   }
 
   getSafeUrl(url: string): SafeResourceUrl {
-    const videoId = this.extractVideoId(url);
-    const safeUrl = `https://www.youtube.com/embed/${videoId}`;
-    return this.sanitizer.bypassSecurityTrustResourceUrl(safeUrl);
+    const videoId = url.split('v=')[1];
+    const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+    return this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl);
   }
 
-  extractVideoId(url: string): string {
-    const videoIdMatch = url.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
-    return videoIdMatch ? videoIdMatch[1] : '';
+  incrementViews(videoId: string): void {
+    this.videoService.incrementViews(videoId).subscribe();
   }
 }

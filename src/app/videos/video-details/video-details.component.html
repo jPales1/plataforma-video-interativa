@@ -1,13 +1,13 @@
 <div *ngIf="video" class="video-container">
   <!-- Vídeo em destaque -->
-  <iframe class="video-player" [src]="getSafeUrl(video.url)" frameborder="0" allowfullscreen></iframe>
+  <iframe class="video-player" [src]="getSafeUrl(video.url)" frameborder="0" allowfullscreen aria-label="Player de vídeo"></iframe>
 
   <!-- Informações detalhadas -->
   <div class="video-info">
     <h2>{{ video.title }}</h2>
     <p class="description">{{ video.description }}</p>
     <p class="details">
-      <span>{{ video.uploadDate }}</span> • 
+      <span>{{ video.uploadedAt | date:'longDate' }}</span> • 
       <span>{{ video.views }} visualizações</span>
     </p>
   </div>
