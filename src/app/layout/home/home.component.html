@@ -2,20 +2,25 @@
   <h1>Vídeos Populares</h1>
 
   <!-- Barra de Pesquisa -->
-  <div class="search-bar">
-    <input type="text" placeholder="Pesquisar vídeos..." [(ngModel)]="searchTerm" (input)="filtrarVideos()">
-    <select [(ngModel)]="categoriaSelecionada" (change)="filtrarVideos()">
+  <div class="search-bar" role="search">
+    <label for="search-input" class="visually-hidden">Pesquisar vídeos</label>
+    <input id="search-input" type="text" placeholder="Pesquisar vídeos..." [(ngModel)]="searchTerm" (input)="filtrarVideos()" aria-label="Pesquisar vídeos">
+    
+    <label for="category-select" class="visually-hidden">Selecionar categoria</label>
+    <select id="category-select" [(ngModel)]="categoriaSelecionada" (change)="filtrarVideos()" aria-label="Selecionar categoria">
       <option value="">Todas as Categorias</option>
       <option *ngFor="let categoria of categorias" [value]="categoria">{{ categoria }}</option>
     </select>
   </div>
 
   <!-- Lista de Vídeos -->
-  <div class="video-card" *ngFor="let video of videosFiltrados">
-    <a [routerLink]="['/video', video.id]">
-      <img [src]="video.thumbnail" alt="Miniatura do vídeo">
-      <h3>{{ video.title }}</h3>
-      <p>{{ video.description }}</p>
-    </a>
+  <div class="video-list" role="list">
+    <div class="video-card" *ngFor="let video of videosFiltrados" role="listitem">
+      <a [routerLink]="['/video', video.id]" [attr.aria-label]="'Assistir ' + video.title">
+        <img [src]="video.thumbnail" [alt]="'Miniatura do vídeo ' + video.title">
+        <h3>{{ video.title }}</h3>
+        <p>{{ video.description }}</p>
+      </a>
+    </div>
   </div>
 </div>

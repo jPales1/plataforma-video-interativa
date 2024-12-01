@@ -28,8 +28,10 @@ export class HomeComponent implements OnInit {
 
   fetchVideos() {
     this.videoService.getVideos().subscribe(videos => {
-      this.videos = videos;
-      this.videosFiltrados = videos;
+      this.videos = videos.sort((a, b) => b.views - a.views);
+      this.videosFiltrados = [...this.videos];
+    }, error => {
+      console.error('Erro ao buscar vídeos:', error);
     });
   }
 
