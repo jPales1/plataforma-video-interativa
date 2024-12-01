@@ -6,5 +6,5 @@ import { NotFoundComponent } from './layout/not-found/not-found.component';
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'video/:id', component: VideoDetailsComponent },
-  { path: '**', component: NotFoundComponent }
+  { path: '**', component: NotFoundComponent }  
 ];
