@@ -1,0 +1,14 @@
+<mat-toolbar color="primary" class="header-container">
+  <div class="header-title">
+    <a [routerLink]="['/']" class="project-title-link">Vievo36</a>
+  </div>
+
+  <div class="header-user" *ngIf="auth.isAuthenticated$ | async; else notLoggedIn">
+    <span>Olá, {{ (auth.user$ | async)?.name }}</span>
+    <button mat-button (click)="logout()">Logout</button>
+  </div>
+
+  <ng-template #notLoggedIn>
+    <button mat-button (click)="login()">Login</button>
+  </ng-template>
+</mat-toolbar>
