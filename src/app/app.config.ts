@@ -4,6 +4,10 @@ import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideAuth0 } from '@auth0/auth0-angular';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { importProvidersFrom } from '@angular/core';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,5 +20,7 @@ export const appConfig: ApplicationConfig = {
       clientId: 'I2r224pUQuf5dpxM8rpn4rV8N3HJGFOz',
       authorizationParams: { redirect_uri: window.location.origin, }
     }),
+    provideAnimationsAsync(),
+    importProvidersFrom(MatToolbarModule, MatButtonModule, MatIconModule)
   ]
 };
